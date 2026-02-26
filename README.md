@@ -9,6 +9,8 @@ git clone https://github.com/your-username/activelifes.git
 cd activelifes
 ```
 
+## Backend Setup
+
 # Install dependencies
 
 ```bash
