@@ -25,4 +25,3 @@ Open your web browser and navigate to http://localhost:5000 to access the applic
 - Backend: Python,Flask
 - Database: MySQL
 - AI: Gemini
-- Markdown: markdown
