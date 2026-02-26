@@ -34,7 +34,7 @@ Open your web browser and navigate to http://localhost:5000 to access the applic
 - Database: MySQL
 - AI: Gemini
 
-##Frontend Setup
+## Frontend Setup
 
 1. Install Angular CLI
 
