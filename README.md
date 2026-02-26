@@ -5,8 +5,8 @@ ActiveLife is a web-based fitness management system that helps users track BMI, 
 # Clone the repository
 
 ```bash
-git clone https://github.com/your-username/activelifes.git
-cd activelifes
+git clone https://github.com/CodeVansh-22/ActiveLife.git
+cd ActiveLife
 ```
 
 ## Backend Setup
