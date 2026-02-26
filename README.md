@@ -11,6 +11,30 @@ cd ActiveLife
 
 ## Backend Setup
 
+# Make Directory
+
+```bash
+mkdir activelife-backend
+```
+
+# Navigate to the backend directory
+
+```bash
+cd activelife-backend
+```
+
+# Make Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+# Activate Virtual Environment
+
+```bash
+venv\Scripts\activate
+```
+
 # Install dependencies
 
 ```bash
