@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv 
 from werkzeug.security import generate_password_hash, check_password_hash 
 from ai_parser import get_ai_fitness_plan
+from datetime import datetime
 
 # 1. Import the db object and your models from database.py
 from database import db, User, Admin, AiPlan, Appointment, Feedback
@@ -117,8 +118,62 @@ def generate_plan():
     else:
         return jsonify({"status": "error", "message": "AI failed to generate."})
 
-# ==========================================
-# SERVER START
+@app.route('/api/my-plans/<int:user_id>', methods=['GET'])
+def get_user_plans(user_id):
+    try:
+        plans = AiPlan.query.filter_by(user_id=user_id).order_by(AiPlan.created_at.desc()).all()
+        
+        plan_list = []
+        for p in plans:
+            plan_list.append({
+                "id": p.id,
+                "bmi": p.bmi_at_time,
+                "conditions": p.medical_conditions_considered,
+                "content": p.generated_plan,
+                # Formats the date nicely (e.g., 2026-03-02)
+                "date": p.created_at.strftime("%B %d, %Y") 
+            })
+            
+        return jsonify({"status": "success", "plans": plan_list})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+@app.route('/api/book-appointment', methods=['POST'])
+def book_appointment():
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        trainer = data.get('trainer')
+        date_str = data.get('date')  # Comes in as 'YYYY-MM-DD' from Angular
+        time_str = data.get('time')  # Comes in as 'HH:MM' from Angular
+
+        # 1. Combine the strings into one standard format
+        combined_str = f"{date_str} {time_str}"
+        
+        # 2. Convert the string into a real Python datetime object
+        appointment_datetime = datetime.strptime(combined_str, "%Y-%m-%d %H:%M")
+
+        # 3. Save the proper datetime object to the database
+        new_appointment = Appointment(
+            user_id=user_id,
+            trainer_name=trainer,
+            appointment_date=appointment_datetime,
+            status='Pending'
+        )
+        
+        db.session.add(new_appointment)
+        db.session.commit()
+        
+        return jsonify({
+            "status": "success", 
+            "message": "Appointment booked successfully!",
+            "booking_status": "Pending"
+        })
+    except Exception as e:
+        db.session.rollback()
+        # This will print the exact error to your terminal if it fails again!
+        print(f"BOOKING ERROR: {str(e)}") 
+        return jsonify({"status": "error", "message": str(e)})# ==========================================
+# SERVER START  
 # ==========================================
 
 if __name__ == '__main__':
