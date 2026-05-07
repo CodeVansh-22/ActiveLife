@@ -1,0 +1,588 @@
+/* Profile Page: bottom padding only (horizontal padding comes from .container parent) */
+.profile-page {
+    width: 100%;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+}
+
+/* Equipment Page: bottom padding only (horizontal padding comes from .container parent) */
+.equipment-page {
+    width: 100%;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+}
+
+/* Forms & Text */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.form-input {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--accent-orange);
+    color: var(--accent-orange);
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+
+.btn-outline:hover {
+    background: rgba(255, 127, 80, 0.1);
+}
+
+/* Button Animations */
+.btn-loading {
+    opacity: 0.8 !important;
+    pointer-events: none !important;
+    position: relative;
+    cursor: wait;
+}
+
+.btn-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.btn-loading-text {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.btn-success {
+    background-color: #22c55e !important;
+    border-color: #22c55e !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+/* Text Formatting */
+.pre-wrap {
+    white-space: pre-wrap;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+/* Chat Interface Utilities */
+.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 16px;
+    max-width: 85%;
+    line-height: 1.4;
+}
+
+.message-user {
+    background: var(--primary-teal);
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.message-ai {
+    background: rgba(255, 255, 255, 0.1);
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-input-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Equipment Card Utility */
+.equipment-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+select option,
+select optgroup {
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    padding: 10px;
+}
+
+/* Home Background Video */
+.home-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    object-fit: cover;
+    opacity: 0.8;
+    filter: saturate(1.1) brightness(0.9);
+    transition: opacity 1s ease;
+}
+
+/* Global Background Overlay for better legibility */
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(10, 30, 41, 0.5) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Floating Chatbot Popup */
+.chatbot-popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 360px;
+    background: rgba(15, 35, 45, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(244, 122, 32, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, visibility 0.4s;
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.chatbot-popup.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Chatbot Floating Action Button (FAB) */
+.chatbot-fab-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+}
+
+.chatbot-tooltip {
+    background: white;
+    color: var(--dark-blue);
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: bounceTooltip 2s infinite ease-in-out;
+    cursor: pointer;
+}
+
+.chatbot-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+@keyframes bounceTooltip {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.chatbot-fab {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-orange), var(--hover-orange));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 25px rgba(244, 122, 32, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+    border: none;
+    outline: none;
+}
+
+.chatbot-fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(244, 122, 32, 0.7);
+}
+
+.chatbot-header {
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(244, 122, 32, 0.2) 0%, rgba(19, 168, 199, 0.1) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chatbot-header .close-btn {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.chatbot-header .close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.chatbot-body {
+    padding: 1.2rem;
+    height: 420px;
+    /* fixed height when open */
+}
+
+/* Override .chat-box inside popup */
+.chatbot-popup .chat-box {
+    margin-bottom: 1rem;
+    border: none;
+    background: transparent;
+    padding: 0;
+    height: calc(100% - 55px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Chat Bubbles inside popup */
+.chatbot-popup .message-user {
+    background: linear-gradient(135deg, var(--accent-orange), var(--hover-orange));
+    color: white;
+    border-radius: 18px 18px 0 18px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 15px rgba(244, 122, 32, 0.3);
+}
+
+.chatbot-popup .message-ai {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px 18px 18px 0;
+    padding: 10px 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-popup .chat-input-row {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    padding: 5px;
+    align-items: center;
+}
+
+.chatbot-popup .chat-input-row input {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding-left: 15px;
+    margin: 0;
+}
+
+.chatbot-popup .chat-input-row input:focus {
+    outline: none;
+}
+
+.chatbot-popup .chat-input-row button {
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-left: 5px;
+}
+
+/* Page Background Wrapper */
+.page-bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(rgba(10, 30, 41, 0.7), rgba(10, 30, 41, 0.7));
+    filter: grayscale(0.7) brightness(0.4) contrast(1.2);
+}
+
+/* Modern Gym Receipt-Style Cards */
+.modern-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.gym-card {
+    background: rgba(10, 20, 25, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.gym-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent-orange), var(--hover-orange));
+    transform: translateY(6px);
+    transition: transform 0.3s ease;
+}
+
+
+.gym-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(244, 122, 32, 0.15);
+    background: rgba(15, 30, 40, 0.85);
+}
+
+.gym-card:hover::before {
+    transform: translateY(0);
+}
+
+.gym-card-img {
+    width: calc(100% + 4rem);
+    margin: -2rem -2rem 1.5rem -2rem;
+    height: 140px;
+    object-fit: cover;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    opacity: 0.8;
+    transition: opacity 0.3s ease, transform 0.8s ease;
+}
+
+.gym-card:hover .gym-card-img {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.gym-card-icon {
+    position: absolute;
+    top: 110px;
+    /* overlapping the image */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-orange), var(--hover-orange));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 20px rgba(244, 122, 32, 0.5);
+    border: 4px solid var(--dark-bg);
+    z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.3, 1.5, 0.6, 1);
+}
+
+.gym-card:hover .gym-card-icon {
+    transform: scale(1.15) rotate(10deg);
+}
+
+.gym-card-title {
+    font-size: 1.4rem;
+    margin-top: 2rem;
+    /* space below icon */
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.gym-card-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-only-link {
+    display: none;
+}
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 768px) {
+
+    .mobile-only-link {
+        display: block !important;
+    }
+
+    .flex-center.gap-1 {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .chatbot-popup {
+        width: calc(100% - 40px);
+        bottom: 90px;
+        right: 20px;
+    }
+
+    /* Raise FAB above bottom nav on mobile */
+    .chatbot-fab-container {
+        bottom: 90px;
+        right: 20px;
+    }
+
+    body {
+        padding-bottom: 80px;
+        /* Space for bottom nav */
+    }
+
+    .profile-page,
+    .equipment-page {
+        padding-bottom: 120px;
+    }
+}
+
+/* --- Bottom Navigation --- */
+.bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 20, 30, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 0;
+        z-index: 1000;
+        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .bottom-nav .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 10px;
+        gap: 2px;
+        transition: all 0.3s ease;
+        flex: 1;
+        min-width: 0;
+        padding: 5px 0;
+    }
+
+    .bottom-nav .nav-item span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        padding: 0 4px;
+    }
+
+    .bottom-nav .nav-item svg {
+        font-size: 18px;
+    }
+
+    .bottom-nav .nav-item.active {
+        color: var(--accent-orange);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+}

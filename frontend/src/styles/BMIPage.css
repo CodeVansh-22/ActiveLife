@@ -1,0 +1,37 @@
+/* BMI Page Styles */
+
+.bmi-container {
+    min-height: 80vh;
+    padding: 20px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bmi-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem;
+}
+
+.bmi-result-area {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bmi-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 480px) {
+    .bmi-container { margin-top: 0.5rem; padding: 10px; }
+    .bmi-card { padding: 1.5rem 1rem; }
+    .bmi-card h2 { font-size: 1.8rem; }
+}

@@ -1,0 +1,128 @@
+/* Reusable Glassmorphism Utility */
+.glass-card {
+    background: rgba(10, 20, 25, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+    color: var(--text-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    background: rgba(10, 30, 41, 0.55);
+}
+
+/* Card Image Enhancements */
+.card-with-image {
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.glass-card:hover .card-image {
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
+}
+
+.card-content {
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+/* Glass Navbar */
+.glass-nav {
+    background: rgba(10, 30, 41, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    padding: 0.8rem 2.5rem;
+    color: var(--text-light);
+    border-radius: 24px;
+    margin-top: 1.5rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 1000;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-logo {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-brand h2 {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Navbar Link Hover Effects */
+.glass-nav a {
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding: 0.5rem;
+}
+
+.glass-nav a:not(.btn-orange):not(:has(img)):not(.text-orange):hover {
+    color: var(--accent-orange);
+}
+
+.glass-nav a:not(.btn-orange):not(:has(img)):not(.text-orange)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent-orange);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.glass-nav a:not(.btn-orange):not(:has(img)):not(.text-orange):hover::after {
+    width: 80%;
+}
+
+/* Buttons */
+.btn-orange {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: var(--hover-orange);
+    transform: scale(1.05);
+}

@@ -1,0 +1,225 @@
+/* Home Page Styles */
+
+.home-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+
+
+
+.home-content {
+    padding-bottom: 5rem;
+}
+
+.hero-section {
+    margin-top: 8vh;
+    margin-bottom: 5rem;
+    padding: 5rem 3rem;
+    max-width: 1000px;
+    width: 95%;
+    background: rgba(10, 30, 41, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 32px;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent, rgba(244, 122, 32, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.hero-title {
+    margin-bottom: 1.5rem;
+    color: var(--accent-orange);
+    font-size: 4.5rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hero-desc {
+    letter-spacing: 0.4px;
+    margin-bottom: 2.5rem;
+    color: white;
+    max-width: 700px;
+    margin-inline: auto;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1350px;
+    padding: 0 1.5rem 5rem;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    color: white;
+    margin-bottom: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--accent-orange);
+    border-radius: 2px;
+}
+
+@media (max-width: 1200px) {
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1.5rem;
+        margin-top: 4vh;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 1rem 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .facilities-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-desc {
+        font-size: 1rem;
+    }
+
+    .hero-section {
+        padding: 2.5rem 1rem;
+    }
+}
+
+.mobile-footer {
+    padding: 3rem 1rem;
+    opacity: 0.4;
+    font-size: 0.85rem;
+    color: white;
+}
+
+/* ── Featured Video ── */
+.featured-video-section {
+    width: 90%;
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 3rem;
+    background: rgba(10, 30, 41, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+}
+
+.video-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.home-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.home-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-orange-outline {
+    background: transparent;
+    border: 2px solid var(--accent-orange);
+    color: var(--accent-orange);
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.btn-orange-outline:hover {
+    background: var(--accent-orange);
+    color: white;
+    box-shadow: 0 8px 20px rgba(244, 122, 32, 0.3);
+}
+
+@media (max-width: 768px) {
+    .featured-video-section {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .video-subtitle {
+        font-size: 0.9rem;
+    }
+}

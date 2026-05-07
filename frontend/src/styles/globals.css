@@ -1,0 +1,257 @@
+/* Custom properties matching the ActiveLife Logo Theme */
+:root {
+    --primary-cyan: #13A8C7;
+    --dark-blue: #0A1E29;
+    --accent-orange: #F47A20;
+    --hover-orange: #E06918;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --glass-bg: rgba(10, 30, 41, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    /* Deep slate to dark cyan gradient to make the bright logo pop */
+    --bg-gradient: linear-gradient(135deg, #0A1E29 0%, #0F3845 100%);
+    --accent-gradient: linear-gradient(135deg, var(--accent-orange), #ff4d4d);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-color: var(--dark-blue);
+    color: var(--text-light);
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Layout Utilities */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Spacing Utilities */
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mx-2 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+/* Responsive Visibility */
+.desktop-only {
+    display: flex;
+}
+
+.mobile-only-flex {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only-flex {
+        display: flex;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .modern-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+}
+
+
+/* Base Styles */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-orange {
+    color: var(--accent-orange);
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Field Validation Styles */
+.input-error {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.3);
+}
+
+.field-error-msg {
+    color: #ff4d4d;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    display: block;
+    animation: fadeInError 0.3s ease-in-out;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Global Container */
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+/* Goal Selection Chips */
+.goal-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+.goal-chip {
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+}
+
+.goal-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.goal-chip.active {
+    background: rgba(244, 122, 32, 0.2);
+    border-color: #f47a20;
+    color: #f47a20;
+    font-weight: 600;
+}
