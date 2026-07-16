@@ -124,6 +124,45 @@ ActiveLife is a comprehensive gym and fitness management application that provid
   - `/services` & `/models`: Business logic, AI integrations, data layers.
   - `/utils`: Database utility connections (`db.py`).
 
+## 🌐 Deployment Instructions
+
+This project is configured for continuous delivery and automatic deployment from GitHub:
+- **Frontend**: Deployed on Vercel.
+- **Backend**: Deployed on Render.
+- **Database**: Hosted on MongoDB Atlas.
+
+### 1. Database Setup (MongoDB Atlas)
+1. Register/Login to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Create a shared cluster and select your preferred cloud provider.
+3. In **Database Access**, create a user with read/write access to your database.
+4. In **Network Access**, click **Add IP Address** and add `0.0.0.0/0` (required to allow Render's dynamic instances to connect).
+5. Go to **Database > Connect > Drivers** and copy your Python/PyMongo Connection String (e.g., `mongodb+srv://...`).
+
+### 2. Backend Deployment (Render)
+1. Register/Login to [Render](https://render.com).
+2. Click **New > Blueprint**.
+3. Connect your GitHub repository containing the ActiveLife project.
+4. Render will automatically parse the `render.yaml` configuration at the root of the project.
+5. In the Render environment configuration, set the following environment variables:
+   - `MONGO_URI`: Your MongoDB Atlas connection string.
+   - `JWT_SECRET`: A secure key to sign JWT tokens.
+   - `FRONTEND_URL`: The URL of your deployed Vercel frontend app.
+   - `SECRET_KEY`: A flask session key.
+   - `OPENROUTER_API_KEY`, `EMAIL_SENDER`, `EMAIL_PASSWORD`, `FAST2SMS_API_KEY` (if active).
+6. Click **Deploy**. Render will build and launch the Flask application with Gunicorn.
+
+### 3. Frontend Deployment (Vercel)
+1. Register/Login to [Vercel](https://vercel.com).
+2. Click **Add New > Project** and import your GitHub repository.
+3. In the configuration:
+   - Set **Root Directory** to `frontend`.
+   - Leave the build commands as defaults (Vercel automatically detects Create React App).
+4. Add the following **Environment Variable**:
+   - `REACT_APP_API_URL`: The URL of your deployed backend service on Render followed by `/api` (e.g. `https://activelife-backend.onrender.com/api`).
+5. Click **Deploy**. Vercel will build the React SPA and serve it, respecting SPA route redirects via `vercel.json`.
+
+---
+
 ## Contributing
 1. When adding new backend endpoints, always ensure that they are properly grouped into `blueprints` (in `backend/routes`) and registered in `app.py`.
 2. For frontend changes, add any new member-only or private routes using the `<ProtectedRoute>` component wrap inside `frontend/src/App.js`.
