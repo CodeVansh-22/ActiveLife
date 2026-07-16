@@ -44,12 +44,15 @@ app.secret_key = os.environ.get('SECRET_KEY', JWT_SECRET)
 
 # Configure CORS dynamically based on deployed frontend URL or fallback
 frontend_url = os.environ.get('FRONTEND_URL')
+import re
 if frontend_url:
-    origins = [origin.strip() for origin in frontend_url.split(',') if origin.strip()]
+    # Split, strip, and remove trailing slashes from origins
+    origins = [origin.strip().rstrip('/') for origin in frontend_url.split(',') if origin.strip()]
+    # Add Vercel wildcard regex as a safety net
+    origins.append(re.compile(r"^https?://.*\.vercel\.app$"))
     logger.info(f"CORS configured for production frontend origins: {origins}")
 else:
     # Compile regex pattern to match localhost, LAN IPs, and Vercel domains
-    import re
     origins = [
         re.compile(r"^https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$"),
         re.compile(r"^https?://.*\.vercel\.app$")
