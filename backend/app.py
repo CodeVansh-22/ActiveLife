@@ -48,12 +48,13 @@ if frontend_url:
     origins = [origin.strip() for origin in frontend_url.split(',') if origin.strip()]
     logger.info(f"CORS configured for production frontend origins: {origins}")
 else:
-    # Compile regex pattern to match localhost and private network LAN IPs for local development
+    # Compile regex pattern to match localhost, LAN IPs, and Vercel domains
     import re
     origins = [
-        re.compile(r"^https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$")
+        re.compile(r"^https?://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$"),
+        re.compile(r"^https?://.*\.vercel\.app$")
     ]
-    logger.info("CORS configured with fallback pattern for local development and LAN access")
+    logger.info("CORS configured with fallback patterns for local development, LAN, and Vercel domains")
 
 CORS(app, resources={r"/*": {"origins": origins}}, supports_credentials=True)
 

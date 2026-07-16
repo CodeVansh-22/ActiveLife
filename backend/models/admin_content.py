@@ -3,7 +3,11 @@ from datetime import datetime
 from bson import ObjectId
 
 class Competition:
-    collection = db['competitions'] if db is not None else None
+    @staticmethod
+    def get_collection():
+        if db is None:
+            raise RuntimeError("Database connection is not established! Please check your MONGO_URI in environment variables and verify that MongoDB Atlas allows access from all IPs (0.0.0.0/0).")
+        return db['competitions']
 
     @staticmethod
     def create(name, date, venue, category):
@@ -14,11 +18,11 @@ class Competition:
             "category": category,
             "created_at": datetime.utcnow()
         }
-        return Competition.collection.insert_one(data)
+        return Competition.get_collection().insert_one(data)
 
     @staticmethod
     def get_all():
-        cursor = Competition.collection.find().sort("created_at", -1)
+        cursor = Competition.get_collection().find().sort("created_at", -1)
         events = []
         for doc in cursor:
             doc['_id'] = str(doc['_id'])
@@ -27,10 +31,14 @@ class Competition:
 
     @staticmethod
     def delete(event_id):
-        return Competition.collection.delete_one({"_id": ObjectId(event_id)})
+        return Competition.get_collection().delete_one({"_id": ObjectId(event_id)})
 
 class LearningVideo:
-    collection = db['learning_videos'] if db is not None else None
+    @staticmethod
+    def get_collection():
+        if db is None:
+            raise RuntimeError("Database connection is not established! Please check your MONGO_URI in environment variables and verify that MongoDB Atlas allows access from all IPs (0.0.0.0/0).")
+        return db['learning_videos']
 
     @staticmethod
     def create(title, subtitle, link, category="Beginner"):
@@ -41,11 +49,11 @@ class LearningVideo:
             "category": category,
             "created_at": datetime.utcnow()
         }
-        return LearningVideo.collection.insert_one(data)
+        return LearningVideo.get_collection().insert_one(data)
 
     @staticmethod
     def get_all():
-        cursor = LearningVideo.collection.find().sort("created_at", -1)
+        cursor = LearningVideo.get_collection().find().sort("created_at", -1)
         videos = []
         for doc in cursor:
             doc['_id'] = str(doc['_id'])
@@ -54,11 +62,11 @@ class LearningVideo:
 
     @staticmethod
     def delete(video_id):
-        return LearningVideo.collection.delete_one({"_id": ObjectId(video_id)})
+        return LearningVideo.get_collection().delete_one({"_id": ObjectId(video_id)})
 
     @staticmethod
     def update(video_id, title, subtitle, link, category):
-        return LearningVideo.collection.update_one(
+        return LearningVideo.get_collection().update_one(
             {"_id": ObjectId(video_id)},
             {"$set": {
                 "title": title,

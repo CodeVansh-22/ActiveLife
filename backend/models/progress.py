@@ -2,11 +2,15 @@ from utils.db import db
 from datetime import datetime
 
 class Progress:
-    collection = db['progress'] if db is not None else None
+    @staticmethod
+    def get_collection():
+        if db is None:
+            raise RuntimeError("Database connection is not established! Please check your MONGO_URI in environment variables and verify that MongoDB Atlas allows access from all IPs (0.0.0.0/0).")
+        return db['progress']
 
     @staticmethod
     def get_user_progress(user_id):
-        progress = Progress.collection.find_one({"user_id": str(user_id)})
+        progress = Progress.get_collection().find_one({"user_id": str(user_id)})
         if not progress:
             progress = {
                 "user_id": str(user_id),
@@ -21,7 +25,7 @@ class Progress:
                 "score": 100,
                 "created_at": datetime.utcnow()
             }
-            Progress.collection.insert_one(progress)
+            Progress.get_collection().insert_one(progress)
         
         if "_id" in progress:
             progress["_id"] = str(progress["_id"])
@@ -50,7 +54,7 @@ class Progress:
             now = datetime.utcnow()
             days_diff = (now.date() - last_active.date()).days
             if days_diff > 1:
-                Progress.collection.update_one(
+                Progress.get_collection().update_one(
                     {"user_id": str(user_id)},
                     {"$set": {"streak": 0}}
                 )
@@ -61,7 +65,7 @@ class Progress:
     @staticmethod
     def start_plan(user_id, duration=30):
         now = datetime.utcnow()
-        Progress.collection.update_one(
+        Progress.get_collection().update_one(
             {"user_id": str(user_id)},
             {
                 "$set": {
@@ -138,7 +142,7 @@ class Progress:
             "day": day_num
         }
 
-        Progress.collection.update_one(
+        Progress.get_collection().update_one(
             {"user_id": str(user_id)},
             {
                 "$set": {
@@ -159,7 +163,7 @@ class Progress:
     @staticmethod
     def mark_exercise_complete(user_id, day_num, exercise_id):
         day_key = f"day{day_num}"
-        Progress.collection.update_one(
+        Progress.get_collection().update_one(
             {"user_id": str(user_id)},
             {"$addToSet": {f"completed_exercises.{day_key}": exercise_id}}
         )
@@ -167,7 +171,7 @@ class Progress:
 
     @staticmethod
     def skip_day(user_id, day_num):
-        Progress.collection.update_one(
+        Progress.get_collection().update_one(
             {"user_id": str(user_id)},
             {
                 "$set": { "streak": 0 },
