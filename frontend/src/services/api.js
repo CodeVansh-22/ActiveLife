@@ -1,23 +1,11 @@
 import axios from 'axios';
 
-const FALLBACK_RENDER_API_URL = 'https://activelife-backend.onrender.com/api';
-const BLOCKED_API_HOSTS = ['activelife.onrender.com'];
+const isVercelDeployment = window.location.hostname.endsWith('.vercel.app');
 
-let baseURL = process.env.REACT_APP_API_URL || '';
-
-try {
-    const configuredUrl = baseURL ? new URL(baseURL) : null;
-    if (configuredUrl && BLOCKED_API_HOSTS.includes(configuredUrl.hostname)) {
-        baseURL = FALLBACK_RENDER_API_URL;
-    }
-} catch (error) {
-    baseURL = '';
-}
+let baseURL = isVercelDeployment ? '/api' : (process.env.REACT_APP_API_URL || '');
 
 if (!baseURL) {
-    baseURL = window.location.hostname.endsWith('.vercel.app')
-        ? FALLBACK_RENDER_API_URL
-        : `http://${window.location.hostname}:5001/api`;
+    baseURL = `http://${window.location.hostname}:5001/api`;
 }
 
 if (baseURL && !baseURL.endsWith('/api') && !baseURL.endsWith('/api/')) {

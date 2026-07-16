@@ -1,5 +1,9 @@
 {
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://activelife.onrender.com/api/$1"
+    },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
