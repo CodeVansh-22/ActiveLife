@@ -1,9 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://activelife-backend.onrender.com/api/:path*" }
+  ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "https://activelife-backend.onrender.com/api/$1"
-    },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
