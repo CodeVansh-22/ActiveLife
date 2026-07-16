@@ -1,6 +1,7 @@
 import os
 import logging
-from flask import Flask, jsonify, send_from_directory
+import re
+from flask import Flask, jsonify, make_response, request, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 from werkzeug.exceptions import HTTPException
@@ -44,7 +45,6 @@ app.secret_key = os.environ.get('SECRET_KEY', JWT_SECRET)
 
 # Configure CORS dynamically based on deployed frontend URL or fallback
 frontend_url = os.environ.get('FRONTEND_URL')
-import re
 if frontend_url:
     # Split, strip, and remove trailing slashes from origins
     origins = [origin.strip().rstrip('/') for origin in frontend_url.split(',') if origin.strip()]
@@ -60,6 +60,40 @@ else:
     logger.info("CORS configured with fallback patterns for local development, LAN, and Vercel domains")
 
 CORS(app, resources={r"/*": {"origins": origins}}, supports_credentials=True)
+
+def is_allowed_origin(origin):
+    if not origin:
+        return False
+
+    normalized_origin = origin.rstrip('/')
+    for allowed_origin in origins:
+        if hasattr(allowed_origin, 'match'):
+            if allowed_origin.match(normalized_origin):
+                return True
+        elif allowed_origin == normalized_origin:
+            return True
+
+    return False
+
+@app.before_request
+def handle_preflight():
+    if request.method == 'OPTIONS':
+        return make_response('', 204)
+
+@app.after_request
+def add_cors_headers(response):
+    origin = request.headers.get('Origin')
+    if is_allowed_origin(origin):
+        response.headers['Access-Control-Allow-Origin'] = origin.rstrip('/')
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Headers'] = request.headers.get(
+            'Access-Control-Request-Headers',
+            'Authorization, Content-Type'
+        )
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+        response.headers.add('Vary', 'Origin')
+
+    return response
 
 # Register Blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
